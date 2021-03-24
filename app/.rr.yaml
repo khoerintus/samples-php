@@ -5,9 +5,27 @@ server:
   command: "php worker.php"
 
 temporal:
-  address: "temporal:7233"
+  address: "localhost:7233"
   activities:
-    num_workers: 10
+    num_workers: 3
+    # default 0 - no limit
+    max_jobs: 50
+    # default 1 minute
+    allocate_timeout: 60s
+    # default 1 minute
+    destroy_timeout: 60s
+    # supervisor used to control http workers
+    supervisor:
+      # watch_tick defines how often to check the state of the workers (seconds)
+      watch_tick: 1s
+      # ttl defines maximum time worker is allowed to live (seconds)
+      ttl: 0
+      # idle_ttl defines maximum duration worker can spend in idle mode after first use. Disabled when 0 (seconds)
+      idle_ttl: 0
+      # exec_ttl defines maximum lifetime per job (seconds)
+      exec_ttl: 0
+      # max_worker_memory limits memory usage per worker (MB)
+      max_worker_memory: 128
 
 logs:
   level: debug
@@ -16,3 +34,11 @@ logs:
       level: error
     informer:
       mode: none
+
+endure:
+  # default 30s to finish, possible values 10s,100m,5h
+  grace_period: 120s
+  # default false, print graph in the graphviz format to the stdout (paste here to visualize https://dreampuf.github.io)
+  print_graph: false
+  # default error
+  log_level: debug

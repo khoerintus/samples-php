@@ -1,4 +1,4 @@
-Temporal Java SDK
+Temporal PHP SDK
 
 Copyright (c) 2020 Temporal Technologies, Inc. All Rights Reserved
 

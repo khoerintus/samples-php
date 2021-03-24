@@ -1,35 +1,25 @@
 version: '3.5'
 
 services:
-  postgresql:
-    container_name: temporal-postgresql
-    image: postgres:9.6
-    environment:
-      POSTGRES_PASSWORD: temporal
-      POSTGRES_USER: temporal
+  cassandra:
+    image: cassandra:3.11
     ports:
-      - 5432:5432
+      - "9042:9042"
 
   temporal:
-    container_name: temporal
-    image: temporalio/auto-setup:1.6.3
+    image: temporalio/auto-setup:1.7.0
     depends_on:
-      - postgresql
+      - cassandra
     environment:
-      - DB=postgresql
-      - DB_PORT=5432
-      - POSTGRES_USER=temporal
-      - POSTGRES_PWD=temporal
-      - POSTGRES_SEEDS=postgresql
-      - DYNAMIC_CONFIG_FILE_PATH=config/dynamicconfig/development.yaml
+      - "CASSANDRA_SEEDS=cassandra"
+      - "DYNAMIC_CONFIG_FILE_PATH=config/dynamicconfig/development.yaml"
     ports:
       - 7233:7233
     volumes:
       - ./dynamicconfig:/etc/temporal/config/dynamicconfig
 
   temporal-admin-tools:
-    container_name: temporal-admin-tools
-    image: temporalio/admin-tools:1.6.3
+    image: temporalio/admin-tools:1.7.0
     depends_on:
       - temporal
     environment:
@@ -38,8 +28,7 @@ services:
     tty: true
 
   temporal-web:
-    container_name: temporal-web
-    image: temporalio/web:1.6.1
+    image: temporalio/web:1.7.0
     depends_on:
       - temporal
     environment:
@@ -48,12 +37,12 @@ services:
     ports:
       - 8088:8088
 
-  app:
-    build: .
-    #volumes:
-    #  - ./app:/var/app
-    depends_on:
-      - temporal
-    environment:
-      - "TEMPORAL_CLI_ADDRESS=temporal:7233"
-    command: [ "/usr/local/bin/wait-for-temporal.sh", "temporal", "/usr/local/bin/rr", "serve", "-c", "/var/app/.rr.yaml" ]
+  # app:
+  #   build: .
+  #   #volumes:
+  #   #  - ./app:/var/app
+  #   depends_on:
+  #     - temporal
+  #   environment:
+  #     - "TEMPORAL_CLI_ADDRESS=temporal:7233"
+  #   command: [ "/usr/local/bin/wait-for-temporal.sh", "temporal", "/usr/local/bin/rr", "serve", "-c", "/var/app/.rr.yaml" ]

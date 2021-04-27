@@ -9,13 +9,13 @@
 
 declare(strict_types=1);
 
-namespace Temporal\Samples\LongRunningActivity;
+namespace Temporal\Samples\MultiWorkerActivity;
 
 use Carbon\CarbonInterval;
 use Temporal\Activity\ActivityOptions;
 use Temporal\Workflow;
 
-class LongRunningWorkflow implements LongRunningWorkflowInterface
+class MultiWorkerWorkflow implements MultiWorkerWorkflowInterface
 {
     private $greetingActivity;
 
@@ -26,8 +26,8 @@ class LongRunningWorkflow implements LongRunningWorkflowInterface
          * invocations. Because activities are reentrant, only a single stub can be used for multiple
          * activity invocations.
          */
-        $this->longRunningActivity = Workflow::newActivityStub(
-            LongRunningActivity::class,
+        $this->multiWorkerActivity = Workflow::newActivityStub(
+            MultiWorkerActivity::class,
             ActivityOptions::new()->withStartToCloseTimeout(CarbonInterval::seconds(200))
         );
     }
@@ -35,6 +35,6 @@ class LongRunningWorkflow implements LongRunningWorkflowInterface
     public function execute(string $name): \Generator
     {
         // This is a blocking call that returns only after the activity has completed.
-        return yield $this->longRunningActivity->composeLongRunning('Hello', $name);
+        return yield $this->multiWorkerActivity->composeMultiWorker('Hello', $name);
     }
 }

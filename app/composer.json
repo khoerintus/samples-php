@@ -1,5 +1,5 @@
 {
-  "minimum-stability": "beta",
+  "minimum-stability": "dev",
   "require": {
     "temporal/sdk": ">=1.0",
     "spiral/tokenizer": ">=2.7"

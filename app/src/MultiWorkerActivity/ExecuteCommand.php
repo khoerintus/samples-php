@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Temporal\Samples\LongRunningActivity;
+namespace Temporal\Samples\MultiWorkerActivity;
 
 use Carbon\CarbonInterval;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,21 +19,21 @@ use Temporal\SampleUtils\Command;
 
 class ExecuteCommand extends Command
 {
-    protected const NAME = 'long-running-activity';
-    protected const DESCRIPTION = 'Execute LongRunningActivity\LongRunningWorkflow';
+    protected const NAME = 'multi-worker-activity';
+    protected const DESCRIPTION = 'Execute MultiWorkerActivity\MultiWorkerWorkflow';
     public const SUCCESS = 'success';
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $workflow = $this->workflowClient->newWorkflowStub(
-            LongRunningWorkflowInterface::class,
+            MultiWorkerWorkflowInterface::class,
             WorkflowOptions::new()->withWorkflowExecutionTimeout(CarbonInterval::minute(5))
         );
 
-        $output->writeln("Starting <comment>LongRunningWorkflow</comment>... ");
+        $output->writeln("Starting <comment>MultiWorkerWorkflow</comment>... ");
 
         // Start a workflow execution. Usually this is done from another program.
-        // Uses task queue from the LongRunningWorkflow @WorkflowMethod annotation.
+        // Uses task queue from the MultiWorkerWorkflow @WorkflowMethod annotation.
         $run = $this->workflowClient->start($workflow, 'Antony');
 
         $output->writeln(

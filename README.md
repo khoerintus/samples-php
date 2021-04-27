@@ -5,7 +5,7 @@ The samples in this repository demonstrate the various capabilities of the [Temp
 If you want to learn more about the Temporal Server and how it works, read the documentation at [https://docs.temporal.io](https://docs.temporal.io).
 
 ## About this README
-This README provides two different approaches to setup the examples. First is relying on running PHP application in docker engine and 
+This README provides two different approaches to setup the examples. First is relying on running PHP application in docker engine and
 does not require any extra work to start examples. The second approach will require to have PHP installed with GRPC extension but makes possible
 to start the application on host machine.
 
@@ -18,7 +18,7 @@ $ cd samples-php
 
 **2. Build docker images.**
 ```bash
-$ docker-compose build 
+$ docker-compose build
 ```
 
 **3. Start server and application containers.**
@@ -86,7 +86,7 @@ The fastest way to do that is by following the [Quick install guide](https://doc
 You can also run the included `docker-compose.yml` file. Make sure to comment `app` section.
 
 **7. Update configuration**
-Make sure to update the temporal address in `app/.rr.yaml` to `localhost:7233`.  
+Make sure to update the temporal address in `app/.rr.yaml` to `localhost:7233`.
 
 **8. Start the application using RoadRunner**
 

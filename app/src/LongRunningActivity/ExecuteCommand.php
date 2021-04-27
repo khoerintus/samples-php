@@ -21,7 +21,6 @@ class ExecuteCommand extends Command
 {
     protected const NAME = 'long-running-activity';
     protected const DESCRIPTION = 'Execute LongRunningActivity\LongRunningWorkflow';
-    public const SUCCESS = 'success';
 
     public function execute(InputInterface $input, OutputInterface $output)
     {

@@ -21,7 +21,6 @@ class ExecuteCommand extends Command
 {
     protected const NAME = 'multi-worker-activity';
     protected const DESCRIPTION = 'Execute MultiWorkerActivity\MultiWorkerWorkflow';
-    public const SUCCESS = 'success';
 
     public function execute(InputInterface $input, OutputInterface $output)
     {

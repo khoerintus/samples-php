@@ -7,7 +7,7 @@ services:
       - "9042:9042"
 
   temporal:
-    image: temporalio/auto-setup:1.7.0
+    image: temporalio/auto-setup:1.8.2
     depends_on:
       - cassandra
     environment:
@@ -19,7 +19,7 @@ services:
       - ./dynamicconfig:/etc/temporal/config/dynamicconfig
 
   temporal-admin-tools:
-    image: temporalio/admin-tools:1.7.0
+    image: temporalio/admin-tools:1.8.2
     depends_on:
       - temporal
     environment:
@@ -28,7 +28,7 @@ services:
     tty: true
 
   temporal-web:
-    image: temporalio/web:1.7.0
+    image: temporalio/web:1.9.0
     depends_on:
       - temporal
     environment:

@@ -21,6 +21,7 @@ class ChildWorkflow
     public function greet(
         string $name
     ) {
+        // throw new \Exception("Testing exception");
         return 'Hello ' . $name . ' from child workflow!';
     }
 }
